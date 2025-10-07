@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Language Selector Example</title>
+  <style>
+    [lang] { display: none; }
+    [lang].active { display: block; }
+  </style>
+</head>
+<body>
+  <label for="language-select">Select Language:</label>
+  <select id="language-select">
+    <option value="en">English</option>
+    <option value="fr">Français</option>
+    <option value="es">Español</option>
+  </select>
+
+  <h1 lang="en">Hello World</h1>
+  <h1 lang="fr">Bonjour le Monde</h1>
+  <h1 lang="es">Hola Mundo</h1>
+
+  <p lang="en">This is the English version of the site.</p>
+  <p lang="fr">Ceci est la version française du site.</p>
+  <p lang="es">Esta es la versión en español del sitio.</p>
+
+  <script>
+    const select = document.getElementById('language-select');
+    const supportedLanguages = ['en', 'fr', 'es'];
+
+    function setLanguage(lang) {
+      supportedLanguages.forEach(l => {
+        document.querySelectorAll(`[lang="${l}"]`).forEach(el => {
+          el.classList.toggle('active', l === lang);
+        });
+      });
+      localStorage.setItem('preferredLanguage', lang);
+    }
+
+    // Load preferred language on page load or default to English
+    const preferredLang = localStorage.getItem('preferredLanguage') || 'en';
+    select.value = preferredLang;
+    setLanguage(preferredLang);
+
+    // Change language when selection changes
+    select.addEventListener('change', (e) => {
+      setLanguage(e.target.value);
+    });
+  </script>
+</body>
+</html>
